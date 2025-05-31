@@ -4,64 +4,80 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jeremy Tan – Portfolio</title>
+
+  <!-- FontAwesome for LinkedIn/GitHub/Email icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-pSbOidMiD2+Qh5M+2JV0uGB4nkfzQkY2PlaOShwv43ub5X1rP0TgUkM7ZHh2y0PBDrQmH5vB4B8l3c5y5eOpg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <!-- Your custom stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
-
   <!-- =========================
-     1) Sidebar (hidden by default)
+       1) Fixed Top‐Left Container (Name + Hamburger + Dropdown)
      ========================= -->
-  <aside id="sidebar" class="sidebar">
-    <!-- Close button (×) -->
-    <button id="closeSidebarBtn" class="btn-close" aria-label="Close Sidebar">&times;</button>
+  <div class="top-left-container">
+    <!-- Your name in white -->
+    <div class="top-name">Jeremy Tan</div>
 
-    <!-- Your Name (large) -->
-    <div class="sidebar-header">
-      <h1 class="sidebar-name">Jeremy Tan</h1>
-      <p class="sidebar-subtitle">Software Engineer</p>
+    <!-- Hamburger button below your name -->
+    <button id="toggleMenuBtn" class="btn-hamburger" aria-label="Toggle Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Dropdown “sidebar” panel (hidden by default) -->
+    <div id="dropdownMenu" class="dropdown-menu">
+      <!-- Navigation Links -->
+      <nav class="dropdown-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="swimming.html">Swimming</a></li>
+          <li><a href="resume.html">Resume</a></li>
+        </ul>
+      </nav>
+
+      <!-- Divider line -->
+      <hr class="dropdown-divider" />
+
+      <!-- Social Icons (FontAwesome) -->
+      <footer class="dropdown-footer">
+        <ul class="icons">
+          <li>
+            <a
+              href="https://www.linkedin.com/in/your-linkedin-id"
+              class="icon brands fa-linkedin"
+              target="_blank"
+              aria-label="LinkedIn"
+            ><span class="label">LinkedIn</span></a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/your-github-username"
+              class="icon brands fa-github"
+              target="_blank"
+              aria-label="GitHub"
+            ><span class="label">GitHub</span></a>
+          </li>
+          <li>
+            <a
+              href="mailto:your.email@example.com"
+              class="icon solid fa-envelope"
+              aria-label="Email"
+            ><span class="label">Email</span></a>
+          </li>
+        </ul>
+      </footer>
     </div>
-
-    <!-- Navigation Links -->
-    <nav class="sidebar-nav">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="swimming.html">Swimming</a></li>
-        <li><a href="resume.html">Resume</a></li>
-      </ul>
-    </nav>
-
-    <!-- Footer with Social Icons -->
-    <footer class="sidebar-footer">
-      <ul class="social-icons">
-        <li>
-          <a href="https://github.com/your‐github‐username" target="_blank" aria-label="GitHub">
-            <img src="assets/images/github.png" alt="GitHub Icon" />
-          </a>
-        </li>
-        <li>
-          <a href="https://www.linkedin.com/in/your‐linkedin‐id" target="_blank" aria-label="LinkedIn">
-            <img src="assets/images/linkedin.png" alt="LinkedIn Icon" />
-          </a>
-        </li>
-        <li>
-          <a href="mailto:your.email@example.com" aria-label="Email">
-            <img src="assets/images/email.png" alt="Email Icon" />
-          </a>
-        </li>
-      </ul>
-    </footer>
-  </aside>
+  </div>
 
   <!-- =========================
-     2) Hamburger Button (fixed, top-left)
-     ========================= -->
-  <button id="openSidebarBtn" class="btn-hamburger" aria-label="Open Sidebar">
-    &#9776;
-  </button>
-
-  <!-- =========================
-     3) Main Content (“Hero” Area)
+       2) Main Content (“Hero” Area + About Me)
      ========================= -->
   <main class="hero">
     <section class="intro-container">
@@ -74,35 +90,31 @@
 
     <h2 class="about-title">About Me</h2>
     <p class="about-bio">
-      {BIO}
+      Hey! I’m originally from Daly City, California, where I have lived my whole life. I’m ethnically Chinese—my parents immigrated from Burma—so I grew up steeped in both Chinese and Burmese traditions, all while being raised in Daly City, California. I’m currently a fourth year student studying Computer Science at Harvey Mudd College and pursuing a full time role as a Software Engineer post grad. I have also been a competitive swimmer for roughly 14 years now and am currently a collegiate athlete for CMS (Claremont-Mudd-Scripps) where I have competed at the national level.
+ I’m excited to gain lots of experience and build cool things! 
+
     </p>
   </main>
 
   <!-- =========================
-     4) Inline JavaScript to Toggle Sidebar
+       3) Inline JavaScript to Toggle Dropdown
      ========================= -->
   <script>
-    // Grab references to buttons & sidebar
-    const openBtn = document.getElementById('openSidebarBtn');
-    const closeBtn = document.getElementById('closeSidebarBtn');
-    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleMenuBtn');
+    const dropdown = document.getElementById('dropdownMenu');
 
-    openBtn.addEventListener('click', () => {
-      sidebar.classList.add('sidebar--visible');
+    toggleBtn.addEventListener('click', () => {
+      dropdown.classList.toggle('dropdown--visible');
     });
 
-    closeBtn.addEventListener('click', () => {
-      sidebar.classList.remove('sidebar--visible');
-    });
-
-    // Close sidebar if user clicks outside of it (optional)
+    // Optional: Click anywhere outside closes the menu
     document.addEventListener('click', (e) => {
       if (
-        sidebar.classList.contains('sidebar--visible') &&
-        !sidebar.contains(e.target) &&
-        e.target !== openBtn
+        !document
+          .querySelector('.top-left-container')
+          .contains(e.target)
       ) {
-        sidebar.classList.remove('sidebar--visible');
+        dropdown.classList.remove('dropdown--visible');
       }
     });
   </script>

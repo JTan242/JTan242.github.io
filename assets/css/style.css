@@ -3,10 +3,10 @@
 ------------------------------------------------------------*/
 :root {
   --bg: #2b2b2b;           /* dark gray background */
-  --section-bg: #1f1f1f;   /* darker gray for sections */
+  --section-bg: #1f1f1f;   /* darker gray for dropdown & sections */
   --accent: #800000;       /* dark red accent */
   --text: #e0e0e0;         /* light gray text */
-  --link-hover: #a00000;   /* brighter red on hover */
+  --link-hover: #a00000;   /* bright red on hover */
 }
 
 /*------------------------------------------------------------
@@ -21,43 +21,39 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.5;
-  color: var(--text);
   background-color: var(--bg);
+  color: var(--text);
   min-height: 100vh;
-  /* Add a top-padding so content isn’t clipped behind the fixed top-bar */
-  padding-top: 4rem; /* roughly the height of .top-bar */
+  /* Reserve top padding so main content isn’t under the fixed container */
+  padding-top: 6rem;  /* ~height of .top-left-container (name + button + some margin) */
 }
 
 /*------------------------------------------------------------
-  2) Top Bar (Name + Hamburger)
+  2) Fixed Top‐Left Container (Name + Hamburger + Dropdown)
 ------------------------------------------------------------*/
-.top-bar {
+.top-left-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4rem;                 /* adjust to taste */
-  background-color: var(--section-bg);
-  border-bottom: 1px solid var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1.5rem;
+  top: 1rem;          /* a little bit down from the very top */
+  left: 1.5rem;       /* a little bit from the left edge */
   z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-/* Name on the top-left */
+/* Your name at top-left */
 .top-name {
-  font-size: 1.5rem;
+  font-size: 1.75rem;    /* adjust size as desired */
   font-weight: bold;
   color: var(--text);
+  margin-bottom: 0.5rem;
 }
 
-/* Hamburger button on the top-right */
+/* Hamburger button just below your name */
 .btn-hamburger {
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: 1.8rem;     /* FontAwesome “bars” icon */
   color: var(--text);
   cursor: pointer;
   transition: color 0.2s ease-in-out;
@@ -68,73 +64,51 @@ body {
 }
 
 /*------------------------------------------------------------
-  3) Sidebar (Right Drawer)
+  3) Dropdown “Sidebar” Panel (hidden by default)
 ------------------------------------------------------------*/
-/* Hidden by default: width = 0; opacity = 0; pointer-events blocked */
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 0;                  /* collapsed */
-  height: 100%;
+.dropdown-menu {
+  position: absolute;
+  top: 3.5rem;          /* ~height of .top-name (1.75rem) + margin + hamburger (1.8rem) */
+  left: 0;
+  width: 200px;         /* adjust width as needed */
   background-color: var(--section-bg);
-  overflow-x: hidden;
-  transition: width 0.3s ease-in-out;
-  z-index: 999;              /* just under top-bar */
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  z-index: 999;
 }
 
-/* When visible, expand to a fixed width */
-.sidebar--visible {
-  width: 260px;              /* adjust width as desired */
+/* When visible, drop into place */
+.dropdown--visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
-/* Close button (×) */
-.btn-close {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: var(--text);
-  align-self: flex-end;
-  margin: 1rem;
-  cursor: pointer;
-  transition: color 0.2s ease-in-out;
+/* Navigation links inside dropdown */
+.dropdown-nav {
+  padding: 0.75rem 1rem;
 }
 
-.btn-close:hover {
-  color: var(--link-hover);
-}
-
-/* Sidebar Header (optional subtitle under the name) */
-.sidebar-header {
-  padding: 1rem 1.5rem 0;
-}
-
-.sidebar-subtitle {
-  font-size: 1rem;
-  color: var(--text);
-  margin-top: 0.25rem;
-}
-
-/* Navigation Links inside Sidebar */
-.sidebar-nav {
-  flex-grow: 1;              /* push footer to bottom */
-  overflow-y: auto;          /* scroll if too tall */
-}
-
-.sidebar-nav ul {
+.dropdown-nav ul {
   list-style: none;
-  padding: 0 1.5rem;
-  margin-top: 1rem;
 }
 
-.sidebar-nav li {
+.dropdown-nav li {
   margin-bottom: 1rem;
 }
 
-.sidebar-nav a {
+.dropdown-nav li:last-child {
+  margin-bottom: 0;
+}
+
+.dropdown-nav a {
   color: var(--text);
   text-decoration: none;
   font-size: 1rem;
@@ -142,39 +116,48 @@ body {
   transition: color 0.2s ease-in-out;
 }
 
-.sidebar-nav a:hover {
+.dropdown-nav a:hover {
   color: var(--link-hover);
   text-decoration: underline;
 }
 
-/* Sidebar Footer (Social Icons at bottom) */
-.sidebar-footer {
-  padding: 1rem 1.5rem 2rem;
+/* Divider line */
+.dropdown-divider {
+  border: 0;
+  border-top: 1px solid var(--accent);
+  margin: 0.5rem 0;
+  opacity: 0.5;
 }
 
-.social-icons {
-  display: flex;
-  justify-content: space-around;
+/* Social icons (FontAwesome) in dropdown footer */
+.dropdown-footer {
+  padding: 0.75rem 1rem 1rem;
+}
+
+.dropdown-footer .icons {
   list-style: none;
 }
 
-.social-icons li a {
-  display: inline-block;
-  transition: opacity 0.2s ease-in-out;
+.dropdown-footer .icons li {
+  margin-bottom: 0.75rem;
 }
 
-.social-icons li a:hover {
-  opacity: 0.8;
+.dropdown-footer .icons li:last-child {
+  margin-bottom: 0;
 }
 
-.social-icons li img {
-  width: 28px;    /* adjust size */
-  height: 28px;
-  object-fit: contain;
+.dropdown-footer .icons li a {
+  color: var(--text);
+  font-size: 1.4rem;   /* size of FontAwesome icon */
+  transition: color 0.2s ease-in-out;
+}
+
+.dropdown-footer .icons li a:hover {
+  color: var(--link-hover);
 }
 
 /*------------------------------------------------------------
-  4) Main Content (“Hero” + About Me)
+  4) Hero & Greeting (Left‐Aligned with Padding)
 ------------------------------------------------------------*/
 .hero {
   max-width: 800px;
@@ -182,14 +165,11 @@ body {
   padding: 2rem 1.5rem;
 }
 
-/* “Hi,” / “I’m Jeremy,” lines */
 .intro-container {
-  text-align: left;        /* left‐align the greeting */
+  text-align: left;
   margin-bottom: 2rem;
-  /* Add left padding of, say, 1.5rem (you can tweak as desired) */
-  padding-left: 1.5rem;    
-  /* Optionally, if you also want right padding so it doesn’t stretch full width: */
-  padding-right: 1.5rem;   
+  padding-left: 1.5rem;  /* so text isn’t flush to left edge */
+  padding-right: 1.5rem;
 }
 
 .intro-large {
@@ -228,9 +208,8 @@ body {
 }
 
 /*------------------------------------------------------------
-  5) Others (Links, Buttons, Sections)
+  5) Generic Links, Sections, Buttons
 ------------------------------------------------------------*/
-/* Links */
 a {
   color: var(--accent);
   text-decoration: none;
@@ -241,7 +220,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Section backgrounds if you use <main><section> structure */
 main section {
   background-color: var(--section-bg);
   border-radius: 8px;
@@ -260,7 +238,6 @@ main section h2 {
   color: var(--text);
 }
 
-/* Example: Resume button in #resume section */
 #resume a {
   display: inline-block;
   background-color: var(--accent);
