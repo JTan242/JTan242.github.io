@@ -1,6 +1,9 @@
+/*------------------------------------------------------------
+  0) Color Variables (dark-red / dark-gray theme)
+------------------------------------------------------------*/
 :root {
   --bg: #2b2b2b;           /* dark gray background */
-  --section-bg: #1f1f1f;   /* even darker gray for sections */
+  --section-bg: #1f1f1f;   /* darker gray for sections */
   --accent: #800000;       /* dark red accent */
   --text: #e0e0e0;         /* light gray text */
   --link-hover: #a00000;   /* brighter red on hover */
@@ -20,20 +23,177 @@ body {
   line-height: 1.5;
   color: var(--text);
   background-color: var(--bg);
-  padding: 2rem;
+  min-height: 100vh;
+  /* Add a top-padding so content isn’t clipped behind the fixed top-bar */
+  padding-top: 4rem; /* roughly the height of .top-bar */
 }
 
 /*------------------------------------------------------------
-  2) Intro Section (“Hi,” / “I’m Jeremy,” / Tagline)
+  2) Top Bar (Name + Hamburger)
 ------------------------------------------------------------*/
-.intro-container {
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4rem;                 /* adjust to taste */
+  background-color: var(--section-bg);
+  border-bottom: 1px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  z-index: 1000;
+}
+
+/* Name on the top-left */
+.top-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text);
+}
+
+/* Hamburger button on the top-right */
+.btn-hamburger {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.btn-hamburger:hover {
+  color: var(--link-hover);
+}
+
+/*------------------------------------------------------------
+  3) Sidebar (Right Drawer)
+------------------------------------------------------------*/
+/* Hidden by default: width = 0; opacity = 0; pointer-events blocked */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 0;                  /* collapsed */
+  height: 100%;
+  background-color: var(--section-bg);
+  overflow-x: hidden;
+  transition: width 0.3s ease-in-out;
+  z-index: 999;              /* just under top-bar */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* When visible, expand to a fixed width */
+.sidebar--visible {
+  width: 260px;              /* adjust width as desired */
+}
+
+/* Close button (×) */
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--text);
+  align-self: flex-end;
+  margin: 1rem;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.btn-close:hover {
+  color: var(--link-hover);
+}
+
+/* Sidebar Header (optional subtitle under the name) */
+.sidebar-header {
+  padding: 1rem 1.5rem 0;
+}
+
+.sidebar-subtitle {
+  font-size: 1rem;
+  color: var(--text);
+  margin-top: 0.25rem;
+}
+
+/* Navigation Links inside Sidebar */
+.sidebar-nav {
+  flex-grow: 1;              /* push footer to bottom */
+  overflow-y: auto;          /* scroll if too tall */
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0 1.5rem;
+  margin-top: 1rem;
+}
+
+.sidebar-nav li {
+  margin-bottom: 1rem;
+}
+
+.sidebar-nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: color 0.2s ease-in-out;
+}
+
+.sidebar-nav a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+/* Sidebar Footer (Social Icons at bottom) */
+.sidebar-footer {
+  padding: 1rem 1.5rem 2rem;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+
+.social-icons li a {
+  display: inline-block;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.social-icons li a:hover {
+  opacity: 0.8;
+}
+
+.social-icons li img {
+  width: 28px;    /* adjust size */
+  height: 28px;
+  object-fit: contain;
+}
+
+/*------------------------------------------------------------
+  4) Main Content (“Hero” + About Me)
+------------------------------------------------------------*/
+.hero {
   max-width: 800px;
-  margin: 0 auto 2rem;
-  text-align: center;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* “Hi,” / “I’m Jeremy,” lines */
+.intro-container {
+  text-align: left;        /* left‐align the greeting */
+  margin-bottom: 2rem;
+  /* Add left padding of, say, 1.5rem (you can tweak as desired) */
+  padding-left: 1.5rem;    
+  /* Optionally, if you also want right padding so it doesn’t stretch full width: */
+  padding-right: 1.5rem;   
 }
 
 .intro-large {
-  font-size: 4rem;        /* adjust as desired */
+  font-size: 4rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
   line-height: 1.1;
@@ -41,7 +201,7 @@ body {
 }
 
 .intro-tagline {
-  font-size: calc(4rem * 2 / 3);  /* 2/3 of intro-large */
+  font-size: calc(4rem * 2 / 3);
   font-weight: normal;
   margin-top: 0;
   margin-bottom: 2rem;
@@ -49,9 +209,7 @@ body {
   color: var(--text);
 }
 
-/*------------------------------------------------------------
-  3) “About Me” Section
-------------------------------------------------------------*/
+/* “About Me” heading */
 .about-title {
   font-size: 2rem;
   font-weight: bold;
@@ -60,17 +218,19 @@ body {
   color: var(--text);
 }
 
+/* Bio paragraph */
 .about-bio {
   font-size: 1rem;
   max-width: 700px;
-  margin: 0 auto;
+  margin: 0 auto 3rem;
   line-height: 1.6;
   color: var(--text);
 }
 
 /*------------------------------------------------------------
-  4) Anchor (Links) Styling
+  5) Others (Links, Buttons, Sections)
 ------------------------------------------------------------*/
+/* Links */
 a {
   color: var(--accent);
   text-decoration: none;
@@ -81,67 +241,18 @@ a:hover {
   text-decoration: underline;
 }
 
-/*------------------------------------------------------------
-  5) Navbar / Header
-     (Assumes your HTML uses: <header> <div class="navbar"> … )
-------------------------------------------------------------*/
-header .navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: var(--accent);
-  z-index: 1000;
-  border-bottom: 1px solid var(--link-hover);
-}
-
-header .navbar ul {
-  margin: 0;
-  padding: 10px 1.5rem;
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  gap: 2rem;
-}
-
-header .navbar li {
-  margin: 0;
-}
-
-header .navbar a {
-  color: var(--text);
-  font-weight: bold;
-  font-size: 1rem;
-  padding: 0.25rem 0.5rem;
-  transition: background-color 0.2s ease-in-out;
-}
-
-header .navbar a:hover {
-  background-color: var(--link-hover);
-  border-radius: 4px;
-}
-
-/* If you have a “spacer” div under the header to push down content */
-.header-spacer {
-  height: calc(10px + 1.5rem + 1.5rem + 1rem); 
-  /* Roughly: top padding (10px) + nav‐text height (~1.5rem) + bottom padding (assumes 1.5rem) + a bit extra. 
-     Adjust if your header height changes. */
-}
-
-/*------------------------------------------------------------
-  6) Main Sections (General <main> <section> Styling)
-------------------------------------------------------------*/
+/* Section backgrounds if you use <main><section> structure */
 main section {
-  max-width: 1000px;
-  margin: 20px auto;
-  padding: 40px 20px;
   background-color: var(--section-bg);
   border-radius: 8px;
+  padding: 40px 20px;
+  margin: 20px auto;
+  max-width: 1000px;
   color: var(--text);
 }
 
 main section h1,
-main section h2,
-main section h3 {
+main section h2 {
   margin-top: 0;
   margin-bottom: 0.5rem;
   padding-bottom: 10px;
@@ -149,112 +260,7 @@ main section h3 {
   color: var(--text);
 }
 
-/*------------------------------------------------------------
-  7) Hobbies List (if applicable)
-------------------------------------------------------------*/
-#hobbies ul {
-  list-style: disc inside;
-  color: var(--text);
-}
-
-/*------------------------------------------------------------
-  8) Projects Layout
-------------------------------------------------------------*/
-.project {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 40px;
-  background-color: var(--bg);
-  border: 1px solid var(--accent);
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.project img {
-  max-width: 200px;
-  border-radius: 4px;
-}
-
-.project h2 {
-  margin: 0 0 10px;
-  flex: 1 1 100%;
-  color: var(--text);
-}
-
-/*------------------------------------------------------------
-  9) Image Galleries / Sliders
-------------------------------------------------------------*/
-.gallery,
-.swim-gallery,
-.slider {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.photo,
-.slide {
-  flex: 1 1 300px;
-}
-
-.photo img,
-.slide img {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
-}
-
-/* Slider Container (if using a horizontal scroll) */
-.slider-container {
-  position: relative;
-  margin: 20px 0;
-  overflow: hidden;
-}
-
-.slider {
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  gap: 10px;
-  display: flex;
-}
-
-/* Slide Buttons */
-.slide-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: var(--accent);
-  border: none;
-  color: var(--text);
-  font-size: 1.5rem;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 50%;
-  opacity: 0.8;
-  z-index: 10;
-}
-
-.slide-btn.prev {
-  left: 5px;
-}
-
-.slide-btn.next {
-  right: 5px;
-}
-
-.slide-btn:hover {
-  opacity: 1;
-}
-
-/* Hide default scrollbar in WebKit */
-.slider::-webkit-scrollbar {
-  display: none;
-}
-
-/*------------------------------------------------------------
-  10) Resume Section Button (if you have a “Download Resume” link)
-------------------------------------------------------------*/
+/* Example: Resume button in #resume section */
 #resume a {
   display: inline-block;
   background-color: var(--accent);
@@ -267,32 +273,4 @@ main section h3 {
 
 #resume a:hover {
   background-color: var(--link-hover);
-}
-
-/*------------------------------------------------------------
-  11) Footer
-     (Assumes your HTML uses: <footer>… </footer>)
-------------------------------------------------------------*/
-footer {
-  text-align: center;
-  padding: 20px;
-  background-color: var(--accent);
-  color: var(--text);
-  margin-top: 2rem;
-}
-
-footer a {
-  display: inline-block;
-  margin: 0 10px;
-  transition: opacity 0.2s ease-in-out;
-}
-
-footer a:hover {
-  opacity: 0.8;
-}
-
-footer img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
 }

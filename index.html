@@ -4,74 +4,107 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jeremy Tan – Portfolio</title>
-
-  <!-- Link to your main stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
-  <!-- ================= HEADER ================= -->
-  <header class="site-header">
-    <div class="header-container">
-      <!-- Your name, very large -->
-      <h1 class="site-name">Jeremy Tan</h1>
 
-      <!-- Simple navigation tabs -->
-      <nav class="site-nav">
-        <ul class="nav-list">
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="projects.html" class="nav-link">Projects</a></li>
-          <li><a href="swimming.html" class="nav-link">Swimming</a></li>
-          <li><a href="resume.html" class="nav-link">Resume</a></li>
-        </ul>
-      </nav>
+  <!-- =========================
+     1) Sidebar (hidden by default)
+     ========================= -->
+  <aside id="sidebar" class="sidebar">
+    <!-- Close button (×) -->
+    <button id="closeSidebarBtn" class="btn-close" aria-label="Close Sidebar">&times;</button>
+
+    <!-- Your Name (large) -->
+    <div class="sidebar-header">
+      <h1 class="sidebar-name">Jeremy Tan</h1>
+      <p class="sidebar-subtitle">Software Engineer</p>
     </div>
-  </header>
 
-  <!-- Add a spacer so content doesn’t hide under the fixed header -->
-  <div class="header-spacer"></div>
+    <!-- Navigation Links -->
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="swimming.html">Swimming</a></li>
+        <li><a href="resume.html">Resume</a></li>
+      </ul>
+    </nav>
 
-  <!-- ================ MAIN CONTENT ================ -->
-  <main class="main-content">
+    <!-- Footer with Social Icons -->
+    <footer class="sidebar-footer">
+      <ul class="social-icons">
+        <li>
+          <a href="https://github.com/your‐github‐username" target="_blank" aria-label="GitHub">
+            <img src="assets/images/github.png" alt="GitHub Icon" />
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/your‐linkedin‐id" target="_blank" aria-label="LinkedIn">
+            <img src="assets/images/linkedin.png" alt="LinkedIn Icon" />
+          </a>
+        </li>
+        <li>
+          <a href="mailto:your.email@example.com" aria-label="Email">
+            <img src="assets/images/email.png" alt="Email Icon" />
+          </a>
+        </li>
+      </ul>
+    </footer>
+  </aside>
+
+  <!-- =========================
+     2) Hamburger Button (fixed, top-left)
+     ========================= -->
+  <button id="openSidebarBtn" class="btn-hamburger" aria-label="Open Sidebar">
+    &#9776;
+  </button>
+
+  <!-- =========================
+     3) Main Content (“Hero” Area)
+     ========================= -->
+  <main class="hero">
     <section class="intro-container">
-      <!-- “Hi,” on its own line, very big -->
       <h1 class="intro-large">Hi,</h1>
-
-      <!-- “I’m Jeremy,” on its own line, very big -->
       <h1 class="intro-large">I’m Jeremy,</h1>
-
-      <!-- Tagline at 2/3 size of .intro-large -->
       <p class="intro-tagline">
         An aspiring software engineer prepared to push outside my comfort zone.
       </p>
     </section>
 
-    <!-- “About Me” heading -->
     <h2 class="about-title">About Me</h2>
-
-    <!-- {BIO} goes here -->
     <p class="about-bio">
-      Hey! I’m originally from Daly City, California, where I have lived my whole life. I’m ethnically Chinese—my parents immigrated from Burma—so I grew up steeped in both Chinese and Burmese traditions, all while being raised in Daly City, California. I’m currently a fourth year student studying Computer Science at Harvey Mudd College and pursuing a full time role as a Software Engineer post grad. I have also been a competitive swimmer for roughly 14 years now and am currently a collegiate athlete for CMS (Claremont-Mudd-Scripps) where I have competed at the national level.
- I’m excited to gain lots of experience and build cool things! 
-
+      {BIO}
     </p>
   </main>
 
-  <!-- ================= FOOTER ================= -->
-  <footer class="site-footer">
-    <div class="footer-container">
-      <!-- GitHub -->
-      <a href="https://github.com/your-github-username" target="_blank" class="social-link">
-        <img src="assets/images/github.png" alt="GitHub" class="social-icon" />
-      </a>
-      <!-- LinkedIn -->
-      <a href="https://www.linkedin.com/in/your-linkedin-id" target="_blank" class="social-link">
-        <img src="assets/images/linkedin.png" alt="LinkedIn" class="social-icon" />
-      </a>
-      <!-- Email -->
-      <a href="mailto:your.email@example.com" class="social-link">
-        <img src="assets/images/email.png" alt="Email" class="social-icon" />
-      </a>
-    </div>
-  </footer>
+  <!-- =========================
+     4) Inline JavaScript to Toggle Sidebar
+     ========================= -->
+  <script>
+    // Grab references to buttons & sidebar
+    const openBtn = document.getElementById('openSidebarBtn');
+    const closeBtn = document.getElementById('closeSidebarBtn');
+    const sidebar = document.getElementById('sidebar');
+
+    openBtn.addEventListener('click', () => {
+      sidebar.classList.add('sidebar--visible');
+    });
+
+    closeBtn.addEventListener('click', () => {
+      sidebar.classList.remove('sidebar--visible');
+    });
+
+    // Close sidebar if user clicks outside of it (optional)
+    document.addEventListener('click', (e) => {
+      if (
+        sidebar.classList.contains('sidebar--visible') &&
+        !sidebar.contains(e.target) &&
+        e.target !== openBtn
+      ) {
+        sidebar.classList.remove('sidebar--visible');
+      }
+    });
+  </script>
 </body>
 </html>
