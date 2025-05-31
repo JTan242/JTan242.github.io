@@ -4,29 +4,72 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jeremy Tan – Portfolio</title>
-  <!-- Link to your external CSS file -->
+
+  <!-- Link to your main stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
-  <div class="intro-container">
-    <!-- "Hi," on its own really‐big line -->
-    <h1 class="intro-large">Hi,</h1>
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="header-container">
+      <!-- Your name, very large -->
+      <h1 class="site-name">Jeremy Tan</h1>
 
-    <!-- "I’m Jeremy," on its own really‐big line -->
-    <h1 class="intro-large">I’m Jeremy,</h1>
+      <!-- Simple navigation tabs -->
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="projects.html" class="nav-link">Projects</a></li>
+          <li><a href="swimming.html" class="nav-link">Swimming</a></li>
+          <li><a href="resume.html" class="nav-link">Resume</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <!-- Tagline at 2/3 of .intro-large’s font-size -->
-    <p class="intro-tagline">
-      An aspiring software engineer prepared to push outside my comfort zone.
+  <!-- Add a spacer so content doesn’t hide under the fixed header -->
+  <div class="header-spacer"></div>
+
+  <!-- ================ MAIN CONTENT ================ -->
+  <main class="main-content">
+    <section class="intro-container">
+      <!-- “Hi,” on its own line, very big -->
+      <h1 class="intro-large">Hi,</h1>
+
+      <!-- “I’m Jeremy,” on its own line, very big -->
+      <h1 class="intro-large">I’m Jeremy,</h1>
+
+      <!-- Tagline at 2/3 size of .intro-large -->
+      <p class="intro-tagline">
+        An aspiring software engineer prepared to push outside my comfort zone.
+      </p>
+    </section>
+
+    <!-- “About Me” heading -->
+    <h2 class="about-title">About Me</h2>
+
+    <!-- {BIO} goes here -->
+    <p class="about-bio">
+      {BIO}
     </p>
-  </div>
+  </main>
 
-  <!-- "About Me" heading (smaller than the tagline) -->
-  <h2 class="about-title">About Me</h2>
-
-  <!-- {BIO} goes here, even smaller than the "About Me" -->
-  <p class="about-bio">
-    {BIO}
-  </p>
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <!-- GitHub -->
+      <a href="https://github.com/your-github-username" target="_blank" class="social-link">
+        <img src="assets/images/github.png" alt="GitHub" class="social-icon" />
+      </a>
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/your-linkedin-id" target="_blank" class="social-link">
+        <img src="assets/images/linkedin.png" alt="LinkedIn" class="social-icon" />
+      </a>
+      <!-- Email -->
+      <a href="mailto:your.email@example.com" class="social-link">
+        <img src="assets/images/email.png" alt="Email" class="social-icon" />
+      </a>
+    </div>
+  </footer>
 </body>
 </html>
