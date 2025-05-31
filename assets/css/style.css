@@ -8,16 +8,60 @@
   
   /* Global Resets */
   * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
   }
   
   body {
-    margin: 0;
-    padding-top: 60px; /* space for fixed navbar */
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    color: #222;
+    background-color: #f9f9f9;
+    padding: 2rem;
+  }
+  .intro-container {
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+  
+  /* “Hi,” and “I’m Jeremy,” – really big */
+  .intro-large {
+    font-size: 4rem;       /* adjust “4rem” up/down for bigger/smaller */
+    font-weight: bold;
+    margin-bottom: 0.5rem; /* small gap under each line */
+    line-height: 1.1;
+  }
+  
+  /* Tagline at 2/3 of .intro-large’s size (4rem * 2/3 = 2.666rem) */
+  .intro-tagline {
+    font-size: calc(4rem * 2 / 3); /* = 2.666666…rem */
+    font-weight: normal;
+    margin-top: 0;               /* remove extra default margin */
+    margin-bottom: 2rem;         /* space before “About Me” */
+    line-height: 1.2;
+  }
+  
+  /*--------------------------------------------------------------------
+    4) “About Me” heading – smaller than tagline
+  --------------------------------------------------------------------*/
+  .about-title {
+    font-size: 2rem;       /* adjust if you want slightly larger/smaller */
+    font-weight: bold;
+    margin-bottom: 1rem;   /* space under heading */
+    text-align: center;    /* center if you want it aligned with intro */
+  }
+  
+  /*--------------------------------------------------------------------
+    5) BIO paragraph – even smaller than the “About Me” heading
+  --------------------------------------------------------------------*/
+  .about-bio {
+    font-size: 1rem;       /* standard paragraph size */
+    max-width: 700px;      /* so it doesn’t stretch too wide */
+    margin: 0 auto;        /* center in its container */
     line-height: 1.6;
+    color: #333;
   }
   
   a {
