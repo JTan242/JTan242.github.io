@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jeremy Tan – Test Full</title>
+
+  <!-- 1) FontAwesome CDN (for the icons) -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-pSbOidMiD2+Qh5M+2JV0uGB4nkfzQkY2PlaOShwv43ub5X1rP0TgUkM7ZHh2y0PBDrQmH5vB4B8l3c5y5eOpg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <!-- 2) Inline CSS: everything you need to position the name, hamburger, and dropdown -->
+  <style>
+    /*======================
+      0) Color Variables
+    ======================*/
+    :root {
+      --bg: #2b2b2b;          /* dark gray */
+      --section-bg: #1f1f1f;  /* even darker gray */
+      --accent: #800000;      /* dark red */
+      --text: #e0e0e0;        /* light gray */
+      --link-hover: #a00000;  /* bright red on hover */
+    }
+
+    /*====================
+      1) Global Resets
+    ====================*/
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      /* Reserve top space so “Jeremy Tan” + hamburger don’t cover content */
+      padding-top: 6rem;
+    }
+
+    /*================================================
+      2) Top-Left Container: Name + Hamburger + Dropdown
+    =================================================*/
+    .top-left-container {
+      position: fixed;
+      top: 1rem;       /* 16px from top */
+      left: 1.5rem;    /* 24px from left */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      z-index: 1000;
+    }
+
+    /* “Jeremy Tan” in white */
+    .top-name {
+      font-size: 1.75rem;  /* ~28px */
+      font-weight: bold;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Hamburger button (FontAwesome “bars”) */
+    .btn-hamburger {
+      background: none;
+      border: none;
+      font-size: 1.8rem;   /* ~29px so it’s easy to see */
+      color: var(--text);
+      cursor: pointer;
+      transition: color 0.2s ease-in-out;
+    }
+
+    .btn-hamburger:hover {
+      color: var(--link-hover);
+    }
+
+    /* Dropdown panel (hidden by default) */
+    .dropdown-menu {
+      position: absolute;
+      top: 3.5rem;         /* ~ name (1.75rem) + spacing + button (1.8rem) */
+      left: 0;
+      width: 200px;        /* adjust if you want wider/narrower */
+      background-color: var(--section-bg);
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      display: flex;
+      flex-direction: column;
+      z-index: 999;
+    }
+
+    /* When dropdown is visible: fade in and drop into place */
+    .dropdown--visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* Navigation links inside dropdown */
+    .dropdown-nav {
+      padding: 0.75rem 1rem;
+    }
+
+    .dropdown-nav ul {
+      list-style: none;
+    }
+
+    .dropdown-nav li {
+      margin-bottom: 1rem;
+    }
+
+    .dropdown-nav li:last-child {
+      margin-bottom: 0;
+    }
+
+    .dropdown-nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: color 0.2s ease-in-out;
+    }
+
+    .dropdown-nav a:hover {
+      color: var(--link-hover);
+      text-decoration: underline;
+    }
+
+    /* Divider line inside dropdown */
+    .dropdown-divider {
+      border: none;
+      border-top: 1px solid var(--accent);
+      margin: 0.5rem 0;
+      opacity: 0.5;
+    }
+
+    /* Social icons (FontAwesome) in dropdown footer */
+    .dropdown-footer {
+      padding: 0.75rem 1rem 1rem;
+    }
+
+    .dropdown-footer .icons {
+      list-style: none;
+    }
+
+    .dropdown-footer .icons li {
+      margin-bottom: 0.75rem;
+    }
+
+    .dropdown-footer .icons li:last-child {
+      margin-bottom: 0;
+    }
+
+    .dropdown-footer .icons li a {
+      color: var(--text);
+      font-size: 1.4rem;  /* roughly 22px */
+      transition: color 0.2s ease-in-out;
+    }
+
+    .dropdown-footer .icons li a:hover {
+      color: var(--link-hover);
+    }
+
+    /*=====================================
+      3) Hero (“Hi, I’m Jeremy”) Section
+    =====================================*/
+    .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .intro-container {
+      text-align: left;
+      margin-bottom: 2rem;
+      padding-left: 1.5rem;  /* so it’s not flush against the left edge */
+      padding-right: 1.5rem; /* optional right padding */
+    }
+
+    .intro-large {
+      font-size: 4rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    .intro-tagline {
+      font-size: calc(4rem * 2 / 3);
+      font-weight: normal;
+      margin-top: 0;
+      margin-bottom: 2rem;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    /* “About Me” heading */
+    .about-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: var(--text);
+    }
+
+    /* Bio paragraph */
+    .about-bio {
+      font-size: 1rem;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <!-- =========================
+       1) Fixed Top-Left Container
+     ========================= -->
+  <div class="top-left-container">
+    <div class="top-name">Jeremy Tan</div>
+
+    <button id="toggleMenuBtn" class="btn-hamburger" aria-label="Toggle Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="dropdownMenu" class="dropdown-menu">
+      <nav class="dropdown-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="swimming.html">Swimming</a></li>
+          <li><a href="resume.html">Resume</a></li>
+        </ul>
+      </nav>
+
+      <hr class="dropdown-divider" />
+
+      <footer class="dropdown-footer">
+        <ul class="icons">
+          <li>
+            <a
+              href="https://www.linkedin.com/in/your-linkedin-id"
+              class="icon brands fa-linkedin"
+              target="_blank"
+              aria-label="LinkedIn"
+            ><span class="label">LinkedIn</span></a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/your-github-username"
+              class="icon brands fa-github"
+              target="_blank"
+              aria-label="GitHub"
+            ><span class="label">GitHub</span></a>
+          </li>
+          <li>
+            <a
+              href="mailto:your.email@example.com"
+              class="icon solid fa-envelope"
+              aria-label="Email"
+            ><span class="label">Email</span></a>
+          </li>
+        </ul>
+      </footer>
+    </div>
+  </div>
+
+  <!-- =========================
+       2) Main Content (“Hero” + About Me)
+     ========================= -->
+  <main class="hero">
+    <section class="intro-container">
+      <h1 class="intro-large">Hi,</h1>
+      <h1 class="intro-large">I’m Jeremy,</h1>
+      <p class="intro-tagline">
+        An aspiring software engineer prepared to push outside my comfort zone.
+      </p>
+    </section>
+
+    <h2 class="about-title">About Me</h2>
+    <p class="about-bio">
+      Hey! I’m originally from Daly City, California, where I have lived my whole life. I’m ethnically Chinese—my parents immigrated from Burma—so I grew up steeped in both Chinese and Burmese traditions, all while being raised in Daly City, California. I’m currently a fourth year student studying Computer Science at Harvey Mudd College and pursuing a full time role as a Software Engineer post grad. I have also been a competitive swimmer for roughly 14 years now and am currently a collegiate athlete for CMS (Claremont-Mudd-Scripps) where I have competed at the national level.
+      I’m excited to gain lots of experience and build cool things!
+    </p>
+  </main>
+
+  <!-- =========================
+       3) JavaScript to Toggle Dropdown
+     ========================= -->
+  <script>
+    const toggleBtn = document.getElementById('toggleMenuBtn');
+    const dropdown = document.getElementById('dropdownMenu');
+
+    toggleBtn.addEventListener('click', () => {
+      dropdown.classList.toggle('dropdown--visible');
+    });
+
+    // Optional: click outside closes the menu
+    document.addEventListener('click', (e) => {
+      const container = document.querySelector('.top-left-container');
+      if (!container.contains(e.target)) {
+        dropdown.classList.remove('dropdown--visible');
+      }
+    });
+  </script>
+</body>
+</html>
