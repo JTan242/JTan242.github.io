@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hamburger Smoke Test</title>
+
+  <!-- 1) Load FontAwesome from CDN -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-pSbOidMiD2+Qh5M+2JV0uGB4nkfzQkY2PlaOShwv43ub5X1rP0TgUkM7ZHh2y0PBDrQmH5vB4B8l3c5y5eOpg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <style>
+    /* Basic reset + dark background */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      height: 100vh;
+      background: #2b2b2b;      /* dark gray so white icon is visible */
+      color: #e0e0e0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Top‐left container (so we’re sure it’s not somewhere off‐screen) */
+    .top-left-container {
+      position: fixed;
+      top: 1rem;          /* 16px down from top */
+      left: 1.5rem;       /* 24px in from left */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.2);  /* semi-transparent behind it so you can see it */
+      padding: 0.5rem;
+      border-radius: 4px;
+    }
+
+    /* Your name in white */
+    .top-name {
+      font-size: 1.75rem;   /* about 28px */
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #e0e0e0;
+    }
+
+    /* Hamburger button */
+    .btn-hamburger {
+      background: none;
+      border: none;
+      font-size: 2rem;      /* 32px so it’s easy to spot */
+      color: #e0e0e0;
+      cursor: pointer;
+      transition: color 0.2s ease-in-out;
+    }
+    .btn-hamburger:hover {
+      color: #a00000;       /* bright red on hover */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-left-container">
+    <div class="top-name">Jeremy Tan</div>
+    <button class="btn-hamburger" aria-label="Toggle Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- A bit of placeholder content so you can click around -->
+  <main style="padding: 5rem 1rem; text-align:center;">
+    <h1 style="color:#e0e0e0;">If you see a hamburger (☰) above-left, FontAwesome is working.</h1>
+    <p style="color:#ddd;">If you don’t see it, something is blocking / not loading the icon.</p>
+  </main>
+</body>
+</html>
