@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jeremy Tan – Portfolio</title>
 
-  <!-- FontAwesome for LinkedIn/GitHub/Email icons -->
+  <!-- 1) FontAwesome (so <i class="fas fa-bars"> works) -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -14,18 +14,19 @@
     referrerpolicy="no-referrer"
   />
 
-  <!-- Your custom stylesheet -->
+  <!-- 2) Your custom CSS -->
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
   <!-- =========================
-       1) Fixed Top‐Left Container (Name + Hamburger + Dropdown)
+       1) Fixed Top‐Left Container
+          (Name + Hamburger + Dropdown)
      ========================= -->
   <div class="top-left-container">
-    <!-- Your name in white -->
+    <!-- Your name in white, top-left -->
     <div class="top-name">Jeremy Tan</div>
 
-    <!-- Hamburger button below your name -->
+    <!-- Hamburger button immediately below your name -->
     <button id="toggleMenuBtn" class="btn-hamburger" aria-label="Toggle Menu">
       <i class="fas fa-bars"></i>
     </button>
@@ -54,7 +55,9 @@
               class="icon brands fa-linkedin"
               target="_blank"
               aria-label="LinkedIn"
-            ><span class="label">LinkedIn</span></a>
+            >
+              <span class="label">LinkedIn</span>
+            </a>
           </li>
           <li>
             <a
@@ -62,14 +65,18 @@
               class="icon brands fa-github"
               target="_blank"
               aria-label="GitHub"
-            ><span class="label">GitHub</span></a>
+            >
+              <span class="label">GitHub</span>
+            </a>
           </li>
           <li>
             <a
               href="mailto:your.email@example.com"
               class="icon solid fa-envelope"
               aria-label="Email"
-            ><span class="label">Email</span></a>
+            >
+              <span class="label">Email</span>
+            </a>
           </li>
         </ul>
       </footer>
@@ -77,7 +84,7 @@
   </div>
 
   <!-- =========================
-       2) Main Content (“Hero” Area + About Me)
+       2) Main Content (“Hero” + About Me)
      ========================= -->
   <main class="hero">
     <section class="intro-container">
@@ -91,8 +98,7 @@
     <h2 class="about-title">About Me</h2>
     <p class="about-bio">
       Hey! I’m originally from Daly City, California, where I have lived my whole life. I’m ethnically Chinese—my parents immigrated from Burma—so I grew up steeped in both Chinese and Burmese traditions, all while being raised in Daly City, California. I’m currently a fourth year student studying Computer Science at Harvey Mudd College and pursuing a full time role as a Software Engineer post grad. I have also been a competitive swimmer for roughly 14 years now and am currently a collegiate athlete for CMS (Claremont-Mudd-Scripps) where I have competed at the national level.
- I’m excited to gain lots of experience and build cool things! 
-
+      I’m excited to gain lots of experience and build cool things!
     </p>
   </main>
 
@@ -100,20 +106,19 @@
        3) Inline JavaScript to Toggle Dropdown
      ========================= -->
   <script>
+    // Grab references
     const toggleBtn = document.getElementById('toggleMenuBtn');
     const dropdown = document.getElementById('dropdownMenu');
 
+    // Toggle “dropdown--visible” class when hamburger is clicked
     toggleBtn.addEventListener('click', () => {
       dropdown.classList.toggle('dropdown--visible');
     });
 
-    // Optional: Click anywhere outside closes the menu
+    // Optional: click outside the .top-left-container closes it
     document.addEventListener('click', (e) => {
-      if (
-        !document
-          .querySelector('.top-left-container')
-          .contains(e.target)
-      ) {
+      const container = document.querySelector('.top-left-container');
+      if (!container.contains(e.target)) {
         dropdown.classList.remove('dropdown--visible');
       }
     });
