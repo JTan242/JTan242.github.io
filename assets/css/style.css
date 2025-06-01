@@ -2,11 +2,13 @@
   0) Color Variables (dark-red / dark-gray theme)
 ------------------------------------------------------------*/
 :root {
-  --bg: #2b2b2b;           /* dark gray background */
-  --section-bg: #1f1f1f;   /* darker gray for dropdown & sections */
-  --accent: #800000;       /* dark red accent */
-  --text: #e0e0e0;         /* light gray text */
-  --link-hover: #a00000;   /* bright red on hover */
+  --sidebar-width: 220px;
+  --bg-color: #0f0f0f;
+  --sidebar-bg: #1f1f1f;
+  --text-color: #ffffff;
+  --link-color: #d12b2b;
+  --link-hover: #ff4444;
+  --accent: #d12b2b;
 }
 
 /*------------------------------------------------------------
@@ -20,234 +22,208 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.5;
-  background-color: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  /* Reserve top padding so main content isn’t hidden under the fixed container */
-  padding-top: 6rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  padding-top: 6rem; /* to push main content below the fixed sidebar if needed */
 }
 
 /*------------------------------------------------------------
-  2) Fixed Top‐Left Container (Name + Hamburger + Dropdown)
+  2) Sidebar (Left Column)
 ------------------------------------------------------------*/
-.top-left-container {
-  position: fixed;
-  top: 1rem;          /* 16px down from top */
-  left: 1.5rem;       /* 24px from the left edge */
-  z-index: 1000;
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--sidebar-bg);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem 0;
 }
 
-/* Your name at top-left */
-.top-name {
-  font-size: 1.75rem;    /* about 28px */
-  font-weight: bold;
-  color: var(--text);
-  margin-bottom: 0.5rem;
-}
-
-/* Hamburger button just below your name */
-.btn-hamburger {
-  background: none;
-  border: none;
-  font-size: 1.8rem;     /* 29px—for the “bars” icon */
-  color: var(--text);
-  cursor: pointer;
-  transition: color 0.2s ease-in-out;
-}
-
-.btn-hamburger:hover {
-  color: var(--link-hover);
-}
-
-/*------------------------------------------------------------
-  3) Dropdown “Sidebar” Panel (hidden by default)
-------------------------------------------------------------*/
-.dropdown-menu {
-  position: absolute;
-  top: 3.5rem;          /* ~ name (1.75rem) + button (1.8rem) */
-  left: 0;
-  width: 200px;         /* adjust width if needed */
-  background-color: var(--section-bg);
-  border: 1px solid var(--accent);
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-  display: flex;
-  flex-direction: column;
-  z-index: 999;
-}
-
-/* When .dropdown--visible is added, show it */
-.dropdown--visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-/* Navigation links inside dropdown */
-.dropdown-nav {
-  padding: 0.75rem 1rem;
-}
-
-.dropdown-nav ul {
-  list-style: none;
-}
-
-.dropdown-nav li {
-  margin-bottom: 1rem;
-}
-
-.dropdown-nav li:last-child {
-  margin-bottom: 0;
-}
-
-.dropdown-nav a {
-  color: var(--text);
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: bold;
-  transition: color 0.2s ease-in-out;
-}
-
-.dropdown-nav a:hover {
-  color: var(--link-hover);
-  text-decoration: underline;
-}
-
-/* Divider line */
-.dropdown-divider {
-  border: 0;
-  border-top: 1px solid var(--accent);
-  margin: 0.5rem 0;
-  opacity: 0.5;
-}
-
-/* Social icons (FontAwesome) in dropdown footer */
-.dropdown-footer {
-  padding: 0.75rem 1rem 1rem;
-}
-
-.dropdown-footer .icons {
-  list-style: none;
-}
-
-.dropdown-footer .icons li {
-  margin-bottom: 0.75rem;
-}
-
-.dropdown-footer .icons li:last-child {
-  margin-bottom: 0;
-}
-
-.dropdown-footer .icons li a {
-  color: var(--text);
-  font-size: 1.4rem;   /* size of the FontAwesome icon */
-  transition: color 0.2s ease-in-out;
-}
-
-.dropdown-footer .icons li a:hover {
-  color: var(--link-hover);
-}
-
-/*------------------------------------------------------------
-  4) Hero & Greeting (Left‐Aligned with Padding)
-------------------------------------------------------------*/
-.hero {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-}
-
-.intro-container {
-  text-align: left;
-  margin-bottom: 2rem;
-  padding-left: 1.5rem;  /* so text isn’t flush to left edge */
-  padding-right: 1.5rem; /* optional */
-}
-
-.intro-large {
-  font-size: 4rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  line-height: 1.1;
-  color: var(--text);
-}
-
-.intro-tagline {
-  font-size: calc(4rem * 2 / 3);
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 2rem;
-  line-height: 1.2;
-  color: var(--text);
-}
-
-/* “About Me” heading */
-.about-title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+/* Logo at top */
+.sidebar .logo {
   text-align: center;
-  color: var(--text);
+  margin-bottom: 2rem;
+}
+.sidebar .logo img {
+  width: 100px;
+  height: auto;
+  cursor: pointer;
 }
 
-/* Bio paragraph */
-.about-bio {
-  font-size: 1rem;
-  max-width: 700px;
-  margin: 0 auto 3rem;
-  line-height: 1.6;
-  color: var(--text);
+/* Navigation links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-left: 0;
+}
+.nav-links li {
+  text-align: center;
+}
+.nav-links li a {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--link-color);
+  display: block;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.2s;
+}
+.nav-links li a:hover {
+  background-color: rgba(255, 68, 68, 0.1);
+  border-radius: 4px;
+}
+
+/* Social icons at bottom */
+.social-icons {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+.social-icons li a {
+  font-size: 1.5rem;
+  color: var(--text-color);
+  transition: color 0.2s;
+}
+.social-icons li a:hover {
+  color: var(--link-hover);
 }
 
 /*------------------------------------------------------------
-  5) Generic Links, Sections, Buttons
+  3) Main Content Area
 ------------------------------------------------------------*/
-a {
-  color: var(--accent);
-  text-decoration: none;
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
 
-a:hover {
-  color: var(--link-hover);
-  text-decoration: underline;
+/* Banner image at top */
+.banner {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-main section {
-  background-color: var(--section-bg);
-  border-radius: 8px;
-  padding: 40px 20px;
-  margin: 20px auto;
-  max-width: 1000px;
-  color: var(--text);
+/* Hero section */
+.hero {
+  padding: 2rem 2rem 1rem 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  background-color: #121212;
 }
-
-main section h1,
-main section h2 {
-  margin-top: 0;
+.hero-text {
+  flex: 1;
+}
+.hero-text h1 {
+  font-size: 3.5rem;
+  line-height: 1.1;
   margin-bottom: 0.5rem;
-  padding-bottom: 10px;
-  border-bottom: 2px solid var(--accent);
-  color: var(--text);
 }
-
-#resume a {
+.hero-text p.tagline {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  color: #cccccc;
+}
+.contact-button {
   display: inline-block;
-  background-color: var(--accent);
-  color: var(--text);
-  padding: 10px 20px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--text-color);
+  border: 2px solid var(--accent);
   border-radius: 4px;
-  margin-top: 10px;
-  transition: background-color 0.2s ease-in-out;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+.contact-button:hover {
+  background-color: var(--accent);
+  color: var(--bg-color);
 }
 
-#resume a:hover {
-  background-color: var(--link-hover);
+/* Gallery container */
+.gallery-container {
+  width: 300px;
+  height: 200px;
+  position: relative;
+  background-color: #282828;
+  border: 2px solid #333333;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.gallery-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Next/Prev buttons */
+.gallery-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: var(--text-color);
+  font-size: 1.5rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+.gallery-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.gallery-button.prev {
+  left: 8px;
+}
+.gallery-button.next {
+  right: 8px;
+}
+
+/*------------------------------------------------------------
+  4) About Me Section (below hero)
+------------------------------------------------------------*/
+.about-section {
+  padding: 2rem;
+  background-color: #121212;
+}
+.about-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.about-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #dddddd;
+  max-width: 700px;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1f1f1f;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 4px;
 }
